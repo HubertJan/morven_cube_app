@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import "../widgets/rounded-button.dart";
+
+import './custom_solve_screen.dart';
+import '../widgets/rounded_button.dart';
+import '../widgets/rounded_slider_button.dart';
 
 class SolveScreen extends StatelessWidget {
   @override
@@ -7,9 +10,9 @@ class SolveScreen extends StatelessWidget {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      body:  Padding(
-      padding: new EdgeInsets.only(top: statusBarHeight),
-      child:Stack(
+      body: Padding(
+        padding: new EdgeInsets.only(top: statusBarHeight),
+        child: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
@@ -17,7 +20,7 @@ class SolveScreen extends StatelessWidget {
                     begin: FractionalOffset.topCenter,
                     end: FractionalOffset.bottomCenter,
                     colors: [
-                      Color.fromRGBO(196, 196, 196, 1),
+                      Color.fromRGBO(205, 205, 205, 1),
                       Color.fromRGBO(245, 245, 245, 1)
                     ], // red to yellow
                     tileMode: TileMode.repeated),
@@ -25,7 +28,7 @@ class SolveScreen extends StatelessWidget {
             ),
             Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
@@ -33,13 +36,17 @@ class SolveScreen extends StatelessWidget {
                     width: 200,
                     height: 200,
                   ),
-                  RoundedButton("Benutzerdefiniert Lösen", () {
+                  SizedBox(height: 40),
+                  RoundedSliderButton("Lösen", () {
                     print("Hdi");
                   }),
-                  RoundedButton("Lösen", () {
-                    print("Hdi");
+                  SizedBox(height: 20),
+                  RoundedButton("Benutzerdefiniertes Lösen", () {
+                    Navigator.of(context)
+                        .pushNamed(CustomSolveScreen.routeName);
                   }),
-                  RoundedButton("Lösen", () {
+                  SizedBox(height: 20),
+                  RoundedButton("Zufällig verdrehen", () {
                     print("Hdi");
                   })
                 ],

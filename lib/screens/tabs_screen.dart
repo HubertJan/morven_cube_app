@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'solve_screen.dart';
+import 'history_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   TabsScreen();
@@ -16,8 +17,8 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void initState() {
     _pages = [
-      {"page": SolveScreen(), "title": "Übersetzen"},
-      {"page": SolveScreen(), "title": "Übersetzen"},
+      {"page": SolveScreen(), "title": "Lösen"},
+      {"page": HistoryScreen(), "title": "Verlauf"},
     ];
     super.initState();
   }
@@ -56,11 +57,11 @@ class NavigationBarWidget extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.vpn_key),
-          title: Text("Solve"),
+          title: Text("Lösen"),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.vpn_key),
-          title: Text("Solve"),
+          icon: Icon(Icons.history),
+          title: Text("Verlauf"),
         ),
       ],
     );
