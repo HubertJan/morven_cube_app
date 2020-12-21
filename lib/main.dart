@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:morven_cube_app/screens/tabs_screen.dart';
+import "package:morven_cube_app/screens/custom_solve_screen.dart";
 
 void main() {
   runApp(MyApp());
@@ -13,11 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color.fromRGBO(0, 87, 255, 1),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: TabsScreen(),
-      routes: {},
+      routes: {CustomSolveScreen.routeName: (ctx) => CustomSolveScreen()},
     );
   }
 }
