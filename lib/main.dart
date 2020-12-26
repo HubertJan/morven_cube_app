@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:morven_cube_app/screens/tabs_screen.dart';
-import "package:morven_cube_app/screens/custom_solve_screen.dart";
+import './screens/solve_viewer_screen.dart';
+import './screens/tabs_screen.dart';
+import "./screens/custom_solve_screen.dart";
+import './screens/result_solve_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +20,11 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: TabsScreen(),
-      routes: {CustomSolveScreen.routeName: (ctx) => CustomSolveScreen()},
+      routes: {
+        CustomSolveScreen.routeName: (ctx) => CustomSolveScreen(),
+        SolveViewerScreen.routeName: (ctx) => SolveViewerScreen(),
+        ResultSolveScreen.routeName: (ctx) => ResultSolveScreen(),
+      },
     );
   }
 }

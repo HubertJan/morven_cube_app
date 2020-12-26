@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:morven_cube_app/screens/solve_viewer_screen.dart';
 
 import './custom_solve_screen.dart';
+import './solve_viewer_screen.dart';
+import './result_solve_screen.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/rounded_slider_button.dart';
 
-class SolveScreen extends StatelessWidget {
+class SolveSetupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -38,7 +41,8 @@ class SolveScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 40),
                   RoundedSliderButton("Lösen", () {
-                    print("Hdi");
+                    Navigator.of(context)
+                        .pushNamed(SolveViewerScreen.routeName);
                   }),
                   SizedBox(height: 20),
                   RoundedButton("Benutzerdefiniertes Lösen", () {
@@ -47,7 +51,8 @@ class SolveScreen extends StatelessWidget {
                   }),
                   SizedBox(height: 20),
                   RoundedButton("Zufällig verdrehen", () {
-                    print("Hdi");
+                    Navigator.of(context)
+                        .pushNamed(ResultSolveScreen.routeName);
                   })
                 ],
               ),

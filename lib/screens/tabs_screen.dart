@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'solve_screen.dart';
+import 'solve_setup_screen.dart';
 import 'history_screen.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void initState() {
     _pages = [
-      {"page": SolveScreen(), "title": "Lösen"},
+      {"page": SolveSetupScreen(), "title": "Lösen"},
       {"page": HistoryScreen(), "title": "Verlauf"},
     ];
     super.initState();
