@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './screens/solve_viewer_screen.dart';
 import './screens/tabs_screen.dart';
@@ -13,18 +14,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Color.fromRGBO(0, 87, 255, 1),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primaryColor: Color.fromRGBO(0, 87, 255, 1),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: TabsScreen(),
+        routes: {
+          CustomSolveScreen.routeName: (ctx) => CustomSolveScreen(),
+          SolveViewerScreen.routeName: (ctx) => SolveViewerScreen(),
+          ResultSolveScreen.routeName: (ctx) => ResultSolveScreen(),
+        },
       ),
-      home: TabsScreen(),
-      routes: {
-        CustomSolveScreen.routeName: (ctx) => CustomSolveScreen(),
-        SolveViewerScreen.routeName: (ctx) => SolveViewerScreen(),
-        ResultSolveScreen.routeName: (ctx) => ResultSolveScreen(),
-      },
     );
   }
 }
