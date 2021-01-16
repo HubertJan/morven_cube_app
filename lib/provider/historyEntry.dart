@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../models/program.dart';
+/* import '../models/program.dart';
 
-class HistoryEntry {
+/* class HistoryEntry {
   final int time;
   final int date;
   final String startPattern;
@@ -17,3 +17,4 @@ class HistoryEntry {
     @required this.program,
   });
 }
+ */ */

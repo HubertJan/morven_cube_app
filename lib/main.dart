@@ -5,6 +5,7 @@ import './screens/solve_viewer_screen.dart';
 import './screens/tabs_screen.dart';
 import "./screens/custom_solve_screen.dart";
 import './screens/result_solve_screen.dart';
+import './provider/status.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [],
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Status("http://10.0.2.2:9000"),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
