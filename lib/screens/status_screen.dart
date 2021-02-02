@@ -13,16 +13,9 @@ class StatusScreen extends StatefulWidget {
 }
 
 class _StatusScreenState extends State<StatusScreen> {
-  Timer _everySecond;
-
   @override
   void initState() {
     super.initState();
-    _everySecond = Timer.periodic(Duration(seconds: 1), (Timer t) {
-      setState(() {
-        print("Lol");
-      });
-    });
   }
 
   @override
