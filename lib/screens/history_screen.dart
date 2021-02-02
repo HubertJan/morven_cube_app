@@ -30,23 +30,20 @@ class HistoryScreen extends StatelessWidget {
           } else {
             return Consumer<HistoryEntries>(
               builder: (ctx, history, _) {
-                return Padding(
-                  padding: new EdgeInsets.only(top: statusBarHeight),
-                  child: Stack(
-                    children: [
-                      Container(),
-                      Center(
-                        child: ListView.builder(
-                          itemBuilder: (ctx, i) {
-                            final entry = history.entries[i];
-                            return HistoryTile(
-                                '${entry.time}s', entry.time, entry.date);
-                          },
-                          itemCount: history.entries.length,
-                        ),
+                return Stack(
+                  children: [
+                    Container(),
+                    Center(
+                      child: ListView.builder(
+                        itemBuilder: (ctx, i) {
+                          final entry = history.entries[i];
+                          return HistoryTile(
+                              '${entry.time}s', entry.time, entry.date);
+                        },
+                        itemCount: history.entries.length,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 );
               },
             );

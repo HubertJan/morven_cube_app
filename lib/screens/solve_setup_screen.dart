@@ -38,37 +38,39 @@ class SolveSetupScreen extends StatelessWidget {
                           tileMode: TileMode.repeated),
                     ),
                   ),
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          color: Colors.blue,
-                          width: 200,
-                          height: 200,
+                  Consumer<Status>(
+                    builder: (ctx, status, _) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              color: Colors.blue,
+                              width: 200,
+                              height: 200,
+                            ),
+                            SizedBox(height: 40),
+                            RoundedSliderButton("Lösen", () {
+                              status.postPattern("solve").then((_) {
+                                Navigator.of(context)
+                                    .pushNamed(SolveViewerScreen.routeName);
+                              });
+                            }),
+                            SizedBox(height: 20),
+                            RoundedButton("Benutzerdefiniertes Lösen", () {
+                              Navigator.of(context)
+                                  .pushNamed(CustomSolveScreen.routeName);
+                            }),
+                            SizedBox(height: 20),
+                            RoundedButton("Zufällig verdrehen", () {
+                              Navigator.of(context)
+                                  .pushNamed(ResultSolveScreen.routeName);
+                            })
+                          ],
                         ),
-                        SizedBox(height: 40),
-                        RoundedSliderButton("Lösen", () {
-                          Provider.of<Status>(context)
-                              .postPattern("solve")
-                              .then((_) {
-                            Navigator.of(context)
-                                .pushNamed(SolveViewerScreen.routeName);
-                          });
-                        }),
-                        SizedBox(height: 20),
-                        RoundedButton("Benutzerdefiniertes Lösen", () {
-                          Navigator.of(context)
-                              .pushNamed(CustomSolveScreen.routeName);
-                        }),
-                        SizedBox(height: 20),
-                        RoundedButton("Zufällig verdrehen", () {
-                          Navigator.of(context)
-                              .pushNamed(ResultSolveScreen.routeName);
-                        })
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),

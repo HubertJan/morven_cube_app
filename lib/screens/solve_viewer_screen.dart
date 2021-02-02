@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../provider/status.dart';
+import '../provider/process.dart';
 import '../screens/result_solve_screen.dart';
 
 class SolveViewerScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _SolveViewerScreenState extends State<SolveViewerScreen> {
         if (_isFetched) {
           _isFetched = false;
           _isFetching = false;
-          if (Provider.of<Status>(context).statusCode == "FINISHED") {
+          if (Provider.of<Process>(context).status == "FINISHED") {
             t.cancel();
             Navigator.of(context).popAndPushNamed(ResultSolveScreen.routeName);
           } else {
@@ -36,7 +36,7 @@ class _SolveViewerScreenState extends State<SolveViewerScreen> {
         }
       } else {
         _isFetching = true;
-        Provider.of<Status>(context).fetchAndSetData().then((_) {
+        Provider.of<Process>(context).fetchAndSetData().then((_) {
           _isFetched = true;
         });
       }
@@ -46,14 +46,14 @@ class _SolveViewerScreenState extends State<SolveViewerScreen> {
   @override
   Widget build(BuildContext context) {
     var body;
-    if (Provider.of<Status>(context).statusCode == "" ||
-        Provider.of<Status>(context).statusCode == "IDLE" ||
+    if (Provider.of<Process>(context).status == "" ||
+        Provider.of<Process>(context).status == "IDLE" ||
         _wasFetchedOnce == false) {
       body = Center(child: CircularProgressIndicator());
     } else {
-      final status = Provider.of<Status>(context);
-      final instructionId = status.runningProcess.currentInstructionId + 1;
-      final instructionLength = status.runningProcess.instructions.length;
+      final process = Provider.of<Process>(context);
+      final instructionId = process.currentInstructionId + 1;
+      final instructionLength = process.instructions.length;
 
       body = Column(
         mainAxisAlignment: MainAxisAlignment.center,

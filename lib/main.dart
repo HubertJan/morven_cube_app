@@ -9,6 +9,7 @@ import './screens/result_solve_screen.dart';
 import './screens/pattern_viewer_screen.dart';
 import './provider/status.dart';
 import './provider/historyEntries.dart';
+import './provider/process.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: Status("http://10.0.2.2:9000"),
+        ),
+        ChangeNotifierProvider.value(
+          value: Process("http://10.0.2.2:9000"),
         ),
         ChangeNotifierProvider.value(
           value: HistoryEntries("http://10.0.2.2:9000"),

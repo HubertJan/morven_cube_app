@@ -4,13 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-import '../models/process.dart';
 import '../models/pattern.dart';
 
 class Status extends ChangeNotifier {
   String statusCode = "";
-  Process runningProcess;
   Pattern pattern;
+  String programId;
   String url;
 
   Status(this.url);
@@ -23,11 +22,10 @@ class Status extends ChangeNotifier {
       return;
     }
     if (extractedData["status"] != "IDLE") {
-      this.runningProcess = Process.fromJson(extractedData);
+      this.programId = extractedData["programId"];
     }
 
     this.statusCode = extractedData["status"];
-    notifyListeners();
   }
 
   Future<void> postPattern(String newPattern) async {

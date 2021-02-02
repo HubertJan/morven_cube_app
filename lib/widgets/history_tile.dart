@@ -36,7 +36,7 @@ class HistoryTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Schritte: ${this.runTime}',
+                'Zeit: ${this.runTime}',
                 style: TextStyle(
                   fontSize: 20,
                 ),
