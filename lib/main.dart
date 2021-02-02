@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:morven_cube_app/provider/historyEntries.dart';
 import 'package:provider/provider.dart';
 
 import './screens/solve_viewer_screen.dart';
 import './screens/tabs_screen.dart';
 import "./screens/custom_solve_screen.dart";
 import './screens/result_solve_screen.dart';
+import './screens/pattern_viewer_screen.dart';
 import './provider/status.dart';
+import './provider/historyEntries.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,6 +23,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Status("http://10.0.2.2:9000"),
         ),
+        ChangeNotifierProvider.value(
+          value: HistoryEntries("http://10.0.2.2:9000"),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -32,6 +38,7 @@ class MyApp extends StatelessWidget {
           CustomSolveScreen.routeName: (ctx) => CustomSolveScreen(),
           SolveViewerScreen.routeName: (ctx) => SolveViewerScreen(),
           ResultSolveScreen.routeName: (ctx) => ResultSolveScreen(),
+          PatternViewerScreen.routeName: (ctx) => PatternViewerScreen(),
         },
       ),
     );

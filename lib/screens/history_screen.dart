@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import '../widgets/history_tile.dart';
+import '../provider/historyEntries.dart';
 
 class HistoryScreen extends StatelessWidget {
   @override
@@ -18,29 +21,37 @@ class HistoryScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: new EdgeInsets.only(top: statusBarHeight),
-        child: Stack(
-          children: [
-            Container(),
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  HistoryTile("5s", 13, "15:45 25.09.2020"),
-                  SizedBox(
-                    height: 1,
+      body: FutureBuilder(
+        future: Provider.of<HistoryEntries>(context, listen: false)
+            .fetchAndSetEntries(),
+        builder: (ctx, dataSnapshot) {
+          if (dataSnapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return Consumer<HistoryEntries>(
+              builder: (ctx, history, _) {
+                return Padding(
+                  padding: new EdgeInsets.only(top: statusBarHeight),
+                  child: Stack(
+                    children: [
+                      Container(),
+                      Center(
+                        child: ListView.builder(
+                          itemBuilder: (ctx, i) {
+                            final entry = history.entries[i];
+                            return HistoryTile(
+                                '${entry.time}s', entry.time, entry.date);
+                          },
+                          itemCount: history.entries.length,
+                        ),
+                      ),
+                    ],
                   ),
-                  HistoryTile("5s", 13, "15:45 25.09.2020"),
-                  SizedBox(
-                    height: 1,
-                  ),
-                  HistoryTile("5s", 13, "15:45 25.09.2020"),
-                ],
-              ),
-            ),
-          ],
-        ),
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }

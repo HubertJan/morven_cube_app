@@ -5,11 +5,12 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../models/process.dart';
+import '../models/pattern.dart';
 
 class Status extends ChangeNotifier {
   String statusCode = "";
   Process runningProcess;
-  String pattern;
+  Pattern pattern;
   String url;
 
   Status(this.url);
@@ -26,6 +27,7 @@ class Status extends ChangeNotifier {
     }
 
     this.statusCode = extractedData["status"];
+    notifyListeners();
   }
 
   Future<void> postPattern(String newPattern) async {
@@ -37,6 +39,7 @@ class Status extends ChangeNotifier {
         return;
       }
       await this.fetchAndSetData();
+      notifyListeners();
     } catch (error) {
       throw error;
     }

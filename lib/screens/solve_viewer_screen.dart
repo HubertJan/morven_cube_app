@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../provider/status.dart';
+import '../screens/result_solve_screen.dart';
 
 class SolveViewerScreen extends StatefulWidget {
   static const routeName = '/solveViewerScreen';
@@ -13,101 +14,69 @@ class SolveViewerScreen extends StatefulWidget {
 }
 
 class _SolveViewerScreenState extends State<SolveViewerScreen> {
-  Timer _everySecond;
-
+  var _wasFetchedOnce = false;
   @override
   void initState() {
     super.initState();
-    _everySecond = Timer.periodic(Duration(seconds: 1), (Timer t) {
-      setState(() {});
+    var _isFetched = false;
+    var _isFetching = false;
+
+    final _everySecond = Timer.periodic(Duration(milliseconds: 100), (Timer t) {
+      if (_isFetching) {
+        if (_isFetched) {
+          _isFetched = false;
+          _isFetching = false;
+          if (Provider.of<Status>(context).statusCode == "FINISHED") {
+            t.cancel();
+            Navigator.of(context).popAndPushNamed(ResultSolveScreen.routeName);
+          } else {
+            _wasFetchedOnce = true;
+            setState(() {});
+          }
+        }
+      } else {
+        _isFetching = true;
+        Provider.of<Status>(context).fetchAndSetData().then((_) {
+          _isFetched = true;
+        });
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(200.0),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
-          flexibleSpace: Container(
-            color: Colors.white,
-            height: double.infinity,
-            padding: EdgeInsets.only(top: 50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text("Der Würfel wird gelöst",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: LinearProgressIndicator(
-                    minHeight: 30,
-                    value: 0.5,
-                  ),
-                ),
-              ],
-            ),
+    var body;
+    if (Provider.of<Status>(context).statusCode == "" ||
+        Provider.of<Status>(context).statusCode == "IDLE" ||
+        _wasFetchedOnce == false) {
+      body = Center(child: CircularProgressIndicator());
+    } else {
+      final status = Provider.of<Status>(context);
+      final instructionId = status.runningProcess.currentInstructionId + 1;
+      final instructionLength = status.runningProcess.instructions.length;
+
+      body = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('$instructionId / $instructionLength'),
+          LinearProgressIndicator(
+            minHeight: 30,
+            value: instructionId / instructionLength,
           ),
-        ),
-      ),
-      body: FutureBuilder(
-        future: Provider.of<Status>(context).fetchAndSetData(),
-        builder: (ctx, dataSnapshot) {
-          if (dataSnapshot.connectionState == ConnectionState.waiting) {
-            if (Provider.of<Status>(context).statusCode == "" &&
-                Provider.of<Status>(context).statusCode == "IDLE") {
-              return Center(child: CircularProgressIndicator());
-            }
-          }
-          return ScrollablePositionedList.builder(
-              physics: NeverScrollableScrollPhysics(),
-              itemCount:
-                  Provider.of<Status>(ctx).runningProcess.instructions.length,
-              itemBuilder: (ctx, i) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 20),
-                      color: Provider.of<Status>(ctx)
-                                  .runningProcess
-                                  .currentInstructionId ==
-                              i
-                          ? Theme.of(context).primaryColor
-                          : Colors.transparent,
-                      height: 30,
-                      width: 30,
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        margin: EdgeInsets.only(right: 20),
-                        padding: EdgeInsets.all(20),
-                        color: Colors.white,
-                        child: Text(
-                            Provider.of<Status>(ctx)
-                                .runningProcess
-                                .instructions[i],
-                            style: TextStyle(fontSize: 20)),
-                      ),
-                    ),
-                  ],
-                );
-              });
-        },
-      ),
+        ],
+      );
+    }
+
+    return Scaffold(
+      body: body,
       bottomNavigationBar: BottomAppBar(
         child: Row(
           children: [
             IconButton(
                 icon: Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop()),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
             Spacer(),
           ],
         ),

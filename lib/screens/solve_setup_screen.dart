@@ -17,7 +17,7 @@ class SolveSetupScreen extends StatelessWidget {
 
     return Scaffold(
       body: FutureBuilder(
-        future: Provider.of<Status>(context).fetchAndSetData(),
+        future: Provider.of<Status>(context, listen: false).fetchAndSetData(),
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
