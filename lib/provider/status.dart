@@ -26,6 +26,7 @@ class Status extends ChangeNotifier {
     }
 
     this.statusCode = extractedData["status"];
+    this.pattern = Pattern.fromString(extractedData["currentPattern"]);
   }
 
   Future<void> postPattern(String newPattern) async {
