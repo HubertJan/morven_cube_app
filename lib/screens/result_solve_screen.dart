@@ -116,7 +116,8 @@ class ResultSolveScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Startmuster", style: TextStyle(fontSize: 16)),
-                            RubiksSideContainer(process.pattern, Side.front)
+                            RubiksSideContainer(
+                                pattern: process.pattern, side: Side.front)
                           ],
                         ),
                       ),
@@ -136,7 +137,8 @@ class ResultSolveScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Endmuster", style: TextStyle(fontSize: 16)),
-                            RubiksSideContainer(process.pattern, Side.front)
+                            RubiksSideContainer(
+                                pattern: process.endPattern, side: Side.front)
                           ],
                         ),
                       ),

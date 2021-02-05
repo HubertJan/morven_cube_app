@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import '../widgets/custom_tile_list.dart';
 import '../widgets//slider_list_tile.dart';
+
+import '../provider/status.dart';
+import './solve_viewer_screen.dart';
 
 class CustomSolveScreen extends StatelessWidget {
   static const routeName = '/customSolveScreen';
@@ -90,8 +95,16 @@ class CustomSolveScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton:
-          FloatingActionButton(child: Icon(Icons.add), onPressed: () {}),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Provider.of<Status>(context, listen: false)
+              .postPattern(
+                  "DRLUUBFBRBLURRLRUBLRDDFDLFUFUFFDBRDUBRUFLLFDDBFLUBLRBD")
+              .then((_) => Navigator.of(context)
+                  .popAndPushNamed(SolveViewerScreen.routeName));
+        },
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

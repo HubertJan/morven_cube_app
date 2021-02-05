@@ -16,7 +16,7 @@ class PatternViewerScreen extends StatelessWidget {
           SizedBox(
             height: 5,
           ),
-          RubiksSideContainer(pattern, side),
+          RubiksSideContainer(pattern: pattern, side: side),
         ],
       ),
     );

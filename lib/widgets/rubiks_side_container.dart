@@ -14,7 +14,10 @@ class RubiksSideContainer extends StatelessWidget {
     "D": Colors.yellow,
   };
 
-  RubiksSideContainer(this.pattern, this.side);
+  RubiksSideContainer({
+    @required this.pattern,
+    @required this.side,
+  });
 
   @override
   Widget build(BuildContext context) {

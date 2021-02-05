@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primaryColor: Color.fromRGBO(0, 87, 255, 1),
+          backgroundColor: Color.fromRGBO(245, 245, 245, 1),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: TabsScreen(),
