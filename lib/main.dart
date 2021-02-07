@@ -10,6 +10,7 @@ import './screens/pattern_viewer_screen.dart';
 import './provider/status.dart';
 import './provider/historyEntries.dart';
 import './provider/process.dart';
+import './provider/sensor.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: HistoryEntries("http://10.0.2.2:9000"),
+        ),
+        ChangeNotifierProvider.value(
+          value: Sensor("http://10.0.2.2:9000"),
         ),
       ],
       child: MaterialApp(

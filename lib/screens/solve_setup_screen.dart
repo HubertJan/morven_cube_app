@@ -64,8 +64,10 @@ class SolveSetupScreen extends StatelessWidget {
                             }),
                             SizedBox(height: 20),
                             RoundedButton("Zufällig verdrehen", () {
-                              Navigator.of(context)
-                                  .pushNamed(ResultSolveScreen.routeName);
+                              status.postPattern("scramble").then((_) {
+                                Navigator.of(context)
+                                    .pushNamed(SolveViewerScreen.routeName);
+                              });
                             })
                           ],
                         ),

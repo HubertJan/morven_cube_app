@@ -28,6 +28,15 @@ class Process with ChangeNotifier {
         : int.parse(json['currentInstructionId']);
   }
 
+  String instructionsToString() {
+    String text = "";
+    this.instructions.forEach((String inst) {
+      text += '$inst ';
+    });
+    text = text.substring(0, text.length - 1);
+    return text;
+  }
+
   Future<void> fetchAndSetData() async {
     final url = '${this.url}/process';
     final response = await http.get(url);
