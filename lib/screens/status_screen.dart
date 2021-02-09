@@ -6,9 +6,11 @@ import 'dart:async';
 
 import '../provider/status.dart';
 import '../provider/process.dart';
+import '../provider/sensor.dart';
 import '../widgets/rubiks_side_container.dart';
 import '../widgets/vertical_variable_tile.dart';
 import '../widgets/status_tile.dart';
+import '../screens/pattern_edit_screen.dart';
 
 class StatusScreen extends StatefulWidget {
   static const routeName = '/statusScreen';
@@ -38,15 +40,30 @@ class _StatusScreenState extends State<StatusScreen> {
             return Consumer<Status>(
               builder: (ctx, status, processWidget) {
                 return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
                   child: ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 50),
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          RubiksSideContainer(
-                              pattern: status.pattern, side: Side.front),
+                          SizedBox(
+                            height: 100,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(PatternEditScreen.routeName,
+                                      arguments: status.pattern)
+                                  .then((pattern) {
+                                if (pattern != null) {
+                                  status.pattern = pattern;
+                                }
+                              });
+                            },
+                            child: RubiksSideContainer(
+                                pattern: status.pattern, side: Side.front),
+                          ),
                           SizedBox(
                             height: 75,
                           ),
@@ -55,46 +72,38 @@ class _StatusScreenState extends State<StatusScreen> {
                           status.statusCode != "IDLE"
                               ? processWidget
                               : SizedBox(),
+                          SizedBox(height: 75),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Prozess",
+                                "Sensor",
                                 style: TextStyle(fontSize: 20),
                               ),
                               SizedBox(height: 14),
                               Container(
                                 child: FutureBuilder(
-                                  future: Provider.of<Process>(context)
+                                  future: Provider.of<Sensor>(context)
                                       .fetchAndSetData(),
                                   builder: (ctx, dataSnapshot) {
                                     if (dataSnapshot.connectionState ==
                                         ConnectionState.waiting) {
                                       return CircularProgressIndicator();
                                     } else {
-                                      return Consumer<Process>(
-                                        builder: (ctx, process, _) => Column(
+                                      return Consumer<Sensor>(
+                                        builder: (ctx, sensor, _) => Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceAround,
                                           children: [
                                             SizedBox(height: 20),
                                             VerticalVariableTile(
                                               title: "Instruktionen",
-                                              variableText:
-                                                  '"${process.instructionsToString()}"',
+                                              variableText: sensor.temp1,
                                             ),
                                             SizedBox(height: 20),
                                             VerticalVariableTile(
                                               title: "Aktuelle Instruktion",
-                                              variableText: process
-                                                  .currentInstructionId
-                                                  .toString(),
-                                            ),
-                                            SizedBox(height: 20),
-                                            VerticalVariableTile(
-                                              title: "Laufzeit",
-                                              variableText:
-                                                  '${(process.time / 1000).toString().replaceAll(".", ",")}s',
+                                              variableText: sensor.temp2,
                                             ),
                                             SizedBox(height: 20),
                                           ],
@@ -108,7 +117,8 @@ class _StatusScreenState extends State<StatusScreen> {
                                     color: Colors.white,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
-                              )
+                              ),
+                              SizedBox(height: 50),
                             ],
                           ),
                         ],

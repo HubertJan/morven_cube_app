@@ -7,21 +7,25 @@ import 'package:provider/provider.dart';
 import '../models/pattern.dart';
 
 class Sensor extends ChangeNotifier {
-  Pattern temp1;
+  String temp1;
   String temp2;
+  String temp3;
+  String volt1;
+  String volt2;
+  String volt3;
   String url;
 
   Sensor(this.url);
 
   Future<void> fetchAndSetData() async {
-    final url = '${this.url}/status';
+    final url = '${this.url}/sensor';
     final response = await http.get(url);
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData == null) {
       return;
     }
-    this.temp1 = extractedData["temp"];
-    this.temp2 = extractedData["temp2"];
+    this.temp1 = extractedData["temp1"].toString();
+    this.temp2 = extractedData["temp2"].toString();
   }
 
   Future<void> postPattern(String newPattern) async {

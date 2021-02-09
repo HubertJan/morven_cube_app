@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 
 import '../models/pattern.dart';
@@ -25,12 +26,14 @@ class RubiksSideContainer extends StatelessWidget {
 
     int i = 0;
     List<Widget> rowChildren = [];
+    double cubeLength = 30;
+    double border = 7;
 
     for (String square in pattern.getSide(side)) {
       rowChildren.add(new Container(
         color: squareToColor[square],
-        width: 30,
-        height: 30,
+        width: cubeLength,
+        height: cubeLength,
       ));
       i += 1;
       if (i == 3) {
@@ -45,9 +48,9 @@ class RubiksSideContainer extends StatelessWidget {
 
     return Container(
       color: Colors.black87,
-      width: 110,
-      height: 110,
-      padding: EdgeInsets.all(5),
+      width: cubeLength * 3 + border * 3,
+      height: cubeLength * 3 + border * 3,
+      padding: EdgeInsets.all(border),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: rows,

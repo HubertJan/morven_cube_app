@@ -11,6 +11,8 @@ class Pattern {
   Pattern.fromString(String patternString)
       : patternList = patternString.split("");
 
+  Pattern.copy(Pattern old) : patternList = old.patternList.toList();
+
   List<String> getSide(Side side) {
     return patternList.sublist(side.index * 9, side.index * 9 + 9);
   }
@@ -25,3 +27,12 @@ enum Side {
   left,
   back,
 }
+
+const sideToIndex = {
+  Side.up: 0,
+  Side.right: 9,
+  Side.front: 18,
+  Side.down: 27,
+  Side.left: 36,
+  Side.back: 45,
+};

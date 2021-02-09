@@ -78,21 +78,6 @@ class ResultSolveScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Ink(
-                      color: Colors.white,
-                      child: ListTile(
-                        title: const Text("Scramble"),
-                        trailing: Container(
-                          padding: EdgeInsets.all(5),
-                          child: Text(
-                            "Aus",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
                 SizedBox(
@@ -158,11 +143,11 @@ class ResultSolveScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      /* floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Theme.of(context).primaryColor,
           label: Text("Wiederholen"),
           onPressed: () {}),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,*/
     );
   }
 }

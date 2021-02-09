@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../models/pattern.dart';
+import '../models/solveSetting.dart';
 
 class Status extends ChangeNotifier {
   String statusCode = "";
@@ -29,10 +30,16 @@ class Status extends ChangeNotifier {
     this.pattern = Pattern.fromString(extractedData["currentPattern"]);
   }
 
-  Future<void> postPattern(String newPattern) async {
+  Future<void> postPattern(String newPattern, {SolveSetting setting}) async {
     try {
-      final url = '${this.url}/pattern/$newPattern';
-      final response = await http.post(url);
+      var requestURL = "";
+      if (setting != null) {
+        requestURL = '${this.url}/pattern/$newPattern?acc50=${setting.acc50}';
+      } else {
+        requestURL = '${this.url}/pattern/$newPattern';
+      }
+
+      final response = await http.post(requestURL);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
         return;
