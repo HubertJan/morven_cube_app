@@ -16,6 +16,14 @@ class Pattern {
   List<String> getSide(Side side) {
     return patternList.sublist(side.index * 9, side.index * 9 + 9);
   }
+
+  String asString() {
+    String patternString = "";
+    patternList.forEach((l) {
+      patternString += l;
+    });
+    return patternString;
+  }
 }
 
 enum Side {

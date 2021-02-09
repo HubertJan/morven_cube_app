@@ -8,13 +8,12 @@ import '../models/pattern.dart';
 
 class Auth extends ChangeNotifier {
   String _url;
-  bool isVerified = false;
 
   Future<bool> connect(String url) async {
     try {
       final response = await http.get('$url/status');
       final responseData = json.decode(response.body);
-      if (responseData['error'] != null) {
+      if (responseData['status'] == null) {
         throw Exception();
       }
       _url = url;
@@ -24,22 +23,36 @@ class Auth extends ChangeNotifier {
     }
   }
 
+  Future<bool> isVerified() async {
+    if (_url == null) {
+      return false;
+    }
+    final response = await http.get('$_url/verified');
+    final responseData = json.decode(response.body);
+    return responseData["verified"] == "true" ? true : false;
+  }
+
   Future<Pattern> getToBeVerifiedPattern() async {
     if (_url == null) {
       throw Exception();
     }
 
-    final response = await http.get('$_url/pattern');
+    final response = await http.get('$_url/toVerifyPattern');
     final responseData = json.decode(response.body);
-    return Pattern.fromString(responseData["currentPattern"]);
+    return Pattern.fromString(responseData["pattern"]);
   }
 
-  Future<void> verifyPattern() async {
+  Future<void> verifyPattern(String pattern) async {
     if (_url == null) {
       throw Exception();
     }
 
-    final response = await http.post('$_url/pattern/verify');
+    await http.patch('$_url/toVerifyPattern/$pattern');
+    final response = await http.patch('$_url/verified/true');
+    isVerified = true;
+    if (response.statusCode == 303) {
+      return;
+    }
     final responseData = json.decode(response.body);
     isVerified = responseData["verified"] == "true" ? true : false;
   }

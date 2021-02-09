@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/verify_pattern_screen.dart';
 import '../provider/auth.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -64,7 +65,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   onPressed: () async {
                     bool isConnected = await auth.connect(_controller.text);
                     if (isConnected) {
-                      //Navigator.of(context).push(
+                      Navigator.of(context)
+                          .pushReplacementNamed(VerifyPatternScreen.routeName);
                     } else {
                       _validate = true;
                       setState(() {});

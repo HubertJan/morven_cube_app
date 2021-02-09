@@ -10,6 +10,8 @@ import "./screens/custom_solve_screen.dart";
 import './screens/result_solve_screen.dart';
 import './screens/pattern_viewer_screen.dart';
 import './screens/auth_screen.dart';
+import './screens/verify_pattern_screen.dart';
+
 import './provider/status.dart';
 import './provider/historyEntries.dart';
 import './provider/process.dart';
@@ -52,8 +54,20 @@ class MyApp extends StatelessWidget {
           ),
           initialRoute: "/",
           routes: {
-            '/':
-                auth.isVerified ? (ctx) => TabsScreen() : (ctx) => AuthScreen(),
+            '/': (ctx) {
+              return FutureBuilder(
+                future: auth.isVerified(),
+                builder: (ctx, dataSnap) {
+                  if (dataSnap.connectionState == ConnectionState.waiting) {
+                    return SizedBox();
+                  } else if (dataSnap.data == true) {
+                    return TabsScreen();
+                  } else {
+                    return AuthScreen();
+                  }
+                },
+              );
+            },
             CustomSolveScreen.routeName: (ctx) => CustomSolveScreen(),
             SolveViewerScreen.routeName: (ctx) => SolveViewerScreen(),
             ResultSolveScreen.routeName: (ctx) => ResultSolveScreen(),
@@ -61,6 +75,7 @@ class MyApp extends StatelessWidget {
             SinglePatternSideEditScreen.routeName: (ctx) =>
                 SinglePatternSideEditScreen(),
             PatternEditScreen.routeName: (ctx) => PatternEditScreen(),
+            VerifyPatternScreen.routeName: (ctx) => VerifyPatternScreen(),
           },
         ),
       ),
