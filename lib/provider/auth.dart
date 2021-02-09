@@ -29,7 +29,7 @@ class Auth extends ChangeNotifier {
     }
     final response = await http.get('$_url/verified');
     final responseData = json.decode(response.body);
-    return responseData["verified"] == "true" ? true : false;
+    return responseData["verified"];
   }
 
   Future<Pattern> getToBeVerifiedPattern() async {
@@ -47,13 +47,10 @@ class Auth extends ChangeNotifier {
       throw Exception();
     }
 
-    await http.patch('$_url/toVerifyPattern/$pattern');
+    var resp = await http.patch('$_url/toVerifyPattern/$pattern');
     final response = await http.patch('$_url/verified/true');
-    isVerified = true;
     if (response.statusCode == 303) {
       return;
     }
-    final responseData = json.decode(response.body);
-    isVerified = responseData["verified"] == "true" ? true : false;
   }
 }

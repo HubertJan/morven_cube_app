@@ -14,7 +14,7 @@ class PatternEditScreen extends StatefulWidget {
 class _PatternEditScreenState extends State<PatternEditScreen> {
   Pattern pattern;
 
-  Widget RubiksSideCard(Pattern pattern, Side side, String title) {
+  Widget rubiksSideCard(Pattern pattern, Side side, String title) {
     return Container(
       padding: EdgeInsets.all(30),
       color: Colors.white,
@@ -30,6 +30,23 @@ class _PatternEditScreenState extends State<PatternEditScreen> {
     );
   }
 
+  Widget buttonRubiksSideCard(Pattern pattern, Side side, String title) {
+    return GestureDetector(
+        onTap: () {
+          Navigator.of(context)
+              .pushNamed(SinglePatternSideEditScreen.routeName,
+                  arguments: pattern)
+              .then((result) {
+            if (result == null) {
+              return;
+            }
+            pattern = result;
+            setState(() {});
+          });
+        },
+        child: rubiksSideCard(pattern, side, title));
+  }
+
   @override
   Widget build(BuildContext context) {
     if (pattern == null) {
@@ -42,7 +59,11 @@ class _PatternEditScreenState extends State<PatternEditScreen> {
           children: [
             IconButton(
                 icon: Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(pattern)),
+                onPressed: () {
+                  if (pattern.isValid()) {
+                    Navigator.of(context).pop(pattern);
+                  }
+                }),
             Spacer(),
           ],
         ),
@@ -53,35 +74,22 @@ class _PatternEditScreenState extends State<PatternEditScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              GestureDetector(
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(SinglePatternSideEditScreen.routeName,
-                            arguments: pattern)
-                        .then((result) {
-                      if (result == null) {
-                        return;
-                      }
-                      pattern = result;
-                      setState(() {});
-                    });
-                  },
-                  child: RubiksSideCard(pattern, Side.front, "Vorderseite")),
-              RubiksSideCard(pattern, Side.back, "Rückseite")
+              buttonRubiksSideCard(pattern, Side.front, "Vorderseite"),
+              buttonRubiksSideCard(pattern, Side.back, "Rückseite"),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              RubiksSideCard(pattern, Side.left, "Linkeseite"),
-              RubiksSideCard(pattern, Side.right, "Rechteseite")
+              buttonRubiksSideCard(pattern, Side.left, "Linke Seite"),
+              buttonRubiksSideCard(pattern, Side.right, "Rechte Seite"),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              RubiksSideCard(pattern, Side.up, "Oberseite"),
-              RubiksSideCard(pattern, Side.down, "Unterseite")
+              buttonRubiksSideCard(pattern, Side.up, "Oberseite"),
+              buttonRubiksSideCard(pattern, Side.down, "Unterseite"),
             ],
           ),
         ],

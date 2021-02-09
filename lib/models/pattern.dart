@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 class Pattern {
   final List<String> patternList;
-  static const SIDE_POSITION_IN_PATTERN = {
-    Side.front: 0,
-  };
+  static const possibleLetter = ["U", "D", "L", "R", "F", "B"];
 
   Pattern(this.patternList);
 
@@ -23,6 +21,24 @@ class Pattern {
       patternString += l;
     });
     return patternString;
+  }
+
+  bool isValid() {
+    var letterCounter = {};
+    possibleLetter.forEach((l) {
+      letterCounter[l] = 0;
+    });
+    bool isValid = true;
+    patternList.forEach((l) {
+      if (!possibleLetter.contains(l)) {
+        isValid = false;
+      }
+      letterCounter[l] += 1;
+      if (letterCounter.length > 9) {
+        isValid = false;
+      }
+    });
+    return isValid;
   }
 }
 

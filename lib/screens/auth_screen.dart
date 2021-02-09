@@ -65,8 +65,12 @@ class _AuthScreenState extends State<AuthScreen> {
                   onPressed: () async {
                     bool isConnected = await auth.connect(_controller.text);
                     if (isConnected) {
-                      Navigator.of(context)
-                          .pushReplacementNamed(VerifyPatternScreen.routeName);
+                      if (await auth.isVerified()) {
+                        Navigator.of(context).pushReplacementNamed("/");
+                      } else {
+                        Navigator.of(context).pushReplacementNamed(
+                            VerifyPatternScreen.routeName);
+                      }
                     } else {
                       _validate = true;
                       setState(() {});

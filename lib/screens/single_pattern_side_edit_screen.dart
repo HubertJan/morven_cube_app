@@ -8,8 +8,6 @@ import '../models/pattern.dart';
 class SinglePatternSideEditScreen extends StatefulWidget {
   static const routeName = '/singlePatternSideEditScreen';
 
-
-
   @override
   _SinglePatternSideEditScreenState createState() =>
       _SinglePatternSideEditScreenState();
@@ -39,6 +37,14 @@ class _SinglePatternSideEditScreenState
         ),
         child: Container(
           decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
             color: squareToColor[key],
             border: _selectedColor == key
                 ? Border.all(width: 5, color: Colors.black)
@@ -91,9 +97,11 @@ class _SinglePatternSideEditScreenState
     }
 
     return Container(
-      color: Colors.black87,
       width: cubeLength * 3 + border * 3,
       height: cubeLength * 3 + border * 3,
+      decoration: BoxDecoration(
+        color: Colors.black87,
+      ),
       padding: EdgeInsets.all(border),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
