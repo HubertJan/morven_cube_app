@@ -38,15 +38,19 @@ class Process with ChangeNotifier {
   }
 
   Future<void> fetchAndSetData() async {
-    final url = '${this.url}/process';
-    final response = await http.get(url);
-    final extractedData = json.decode(response.body) as Map<String, dynamic>;
-    if (extractedData == null) {
-      return;
-    }
-    status = extractedData["status"];
-    if (extractedData["status"] != "IDLE") {
-      _setDataFromJSON(extractedData);
+    try {
+      final url = '${this.url}/process';
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if (extractedData == null) {
+        return;
+      }
+      status = extractedData["status"];
+      if (extractedData["status"] != "IDLE") {
+        _setDataFromJSON(extractedData);
+      }
+    } catch (e) {
+      return e;
     }
   }
 }

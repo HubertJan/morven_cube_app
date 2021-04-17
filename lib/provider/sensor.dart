@@ -24,7 +24,7 @@ class Sensor extends ChangeNotifier {
     if (extractedData == null) {
       return;
     }
-    this.temp1 = extractedData["temp1"].toString();
+    this.temp1 = extractedData["temp"].toString();
     this.temp2 = extractedData["temp2"].toString();
   }
 

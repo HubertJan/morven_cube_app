@@ -68,11 +68,15 @@ class _StatusScreenState extends State<StatusScreen> {
                             height: 75,
                           ),
                           StatusTile(status.statusCode),
-                          SizedBox(height: 30),
                           status.statusCode != "IDLE"
-                              ? processWidget
+                              ? Column(
+                                  children: [
+                                    SizedBox(height: 30),
+                                    processWidget,
+                                    SizedBox(height: 75),
+                                  ],
+                                )
                               : SizedBox(),
-                          SizedBox(height: 75),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -88,7 +92,7 @@ class _StatusScreenState extends State<StatusScreen> {
                                   builder: (ctx, dataSnapshot) {
                                     if (dataSnapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return SizedBox();
                                     } else {
                                       return Consumer<Sensor>(
                                         builder: (ctx, sensor, _) => Column(
