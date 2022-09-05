@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:morven_cube_app/screens/solve_viewer_screen.dart';
+import 'package:morven_cube_app/screens/solve/result_solve_screen.dart';
 import 'package:provider/provider.dart';
-import 'dart:async';
 
-import './custom_solve_screen.dart';
-import './solve_viewer_screen.dart';
-import './result_solve_screen.dart';
-import '../widgets/rounded_button.dart';
-import '../widgets/rounded_slider_button.dart';
-import '../provider/status.dart';
+import 'custom_solve_screen.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/rounded_slider_button.dart';
+import '../../provider/status.dart';
 
 class SolveSetupScreen extends StatelessWidget {
   @override
@@ -54,7 +51,7 @@ class SolveSetupScreen extends StatelessWidget {
                             RoundedSliderButton("Lösen", () {
                               status.postPattern("solve").then((_) {
                                 Navigator.of(context)
-                                    .pushNamed(SolveViewerScreen.routeName);
+                                    .pushNamed(ResultSolveScreen.routeName);
                               });
                             }),
                             SizedBox(height: 20),
@@ -66,7 +63,7 @@ class SolveSetupScreen extends StatelessWidget {
                             RoundedButton("Zufällig verdrehen", () {
                               status.postPattern("scramble").then((_) {
                                 Navigator.of(context)
-                                    .pushNamed(SolveViewerScreen.routeName);
+                                    .pushNamed(ResultSolveScreen.routeName);
                               });
                             })
                           ],

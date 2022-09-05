@@ -10,7 +10,7 @@ import '../provider/sensor.dart';
 import '../widgets/rubiks_side_container.dart';
 import '../widgets/vertical_variable_tile.dart';
 import '../widgets/status_tile.dart';
-import '../screens/pattern_edit_screen.dart';
+import '../screens/pattern_screens/pattern_edit_screen.dart';
 
 class StatusScreen extends StatefulWidget {
   static const routeName = '/statusScreen';
@@ -157,12 +157,12 @@ class _StatusScreenState extends State<StatusScreen> {
                                   variableText:
                                       '"${process.instructionsToString()}"',
                                 ),
-                                SizedBox(height: 20),
+                                /*         SizedBox(height: 20),
                                 VerticalVariableTile(
                                   title: "Aktuelle Instruktion",
                                   variableText:
                                       process.currentInstructionId.toString(),
-                                ),
+                                ), */
                                 SizedBox(height: 20),
                                 VerticalVariableTile(
                                   title: "Laufzeit",

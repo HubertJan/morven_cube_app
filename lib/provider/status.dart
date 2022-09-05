@@ -34,12 +34,12 @@ class Status extends ChangeNotifier {
     try {
       var requestURL = "";
       if (setting != null) {
-        requestURL = '${this.url}/pattern/$newPattern?acc50=${setting.acc50}';
+        requestURL = '${this.url}/pattern/$newPattern';
       } else {
         requestURL = '${this.url}/pattern/$newPattern';
       }
 
-      final response = await http.post(requestURL);
+      final response = await http.patch(requestURL);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
         return;

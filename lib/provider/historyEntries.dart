@@ -30,8 +30,8 @@ class HistoryEntries extends ChangeNotifier {
           id: data["id"],
           time: data["time"].toInt(),
           date: data["date"],
-          startPattern: Pattern(data["startPattern"]),
-          endPattern: Pattern(data["endPattern"]),
+          startPattern: Pattern.fromString(data["startPattern"]),
+          endPattern: Pattern.fromString(data["endPattern"]),
           instructions: data["instructions"],
         ),
       );

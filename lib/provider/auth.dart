@@ -11,9 +11,9 @@ class Auth extends ChangeNotifier {
 
   Future<bool> connect(String url) async {
     try {
-      final response = await http.get('$url/status');
+      final response = await http.get('http://$url/sensor');
       final responseData = json.decode(response.body);
-      if (responseData['status'] == null) {
+      if (responseData['temp'] == null) {
         throw Exception();
       }
       _url = url;
@@ -27,9 +27,12 @@ class Auth extends ChangeNotifier {
     if (_url == null) {
       return false;
     }
-    final response = await http.get('$_url/verified');
-    final responseData = json.decode(response.body);
-    return responseData["verified"];
+    try {
+      final response = await http.get('http://$_url/pattern');
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<Pattern> getToBeVerifiedPattern() async {
@@ -37,7 +40,7 @@ class Auth extends ChangeNotifier {
       throw Exception();
     }
 
-    final response = await http.get('$_url/toVerifyPattern');
+    final response = await http.get('http://$_url/possiblePattern');
     final responseData = json.decode(response.body);
     return Pattern.fromString(responseData["pattern"]);
   }
@@ -47,10 +50,6 @@ class Auth extends ChangeNotifier {
       throw Exception();
     }
 
-    var resp = await http.patch('$_url/toVerifyPattern/$pattern');
-    final response = await http.patch('$_url/verified/true');
-    if (response.statusCode == 303) {
-      return;
-    }
+    final resp = await http.patch('$_url/verifiedPattern/$pattern');
   }
 }

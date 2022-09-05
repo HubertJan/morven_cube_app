@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/auth.dart';
-import '../widgets/rubiks_side_container.dart';
-import '../screens/pattern_edit_screen.dart';
-import '../models/pattern.dart';
+import '../../provider/auth.dart';
+import '../../widgets/rubiks_side_container.dart';
+import '../pattern_screens/pattern_edit_screen.dart';
+import '../../models/pattern.dart';
 
 class VerifyPatternScreen extends StatefulWidget {
   static const routeName = '/verifyPattern';

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:morven_cube_app/models/pattern.dart';
 import 'package:morven_cube_app/widgets/rubiks_side_container.dart';
 import 'package:provider/provider.dart';
-import '../widgets/custom_tile_list.dart';
-import '../widgets//slider_list_tile.dart';
+import '../../widgets/custom_tile_list.dart';
+import '../../widgets/slider_list_tile.dart';
 
-import '../provider/status.dart';
-import '../provider/process.dart';
-import '../widgets/rubiks_side_container.dart';
-import '../screens/pattern_viewer_screen.dart';
+import '../../provider/status.dart';
+import '../../provider/process.dart';
+import '../../widgets/rubiks_side_container.dart';
+import '../pattern_screens/pattern_viewer_screen.dart';
 
 class ResultSolveScreen extends StatelessWidget {
   static const routeName = '/resultSolveScreen';

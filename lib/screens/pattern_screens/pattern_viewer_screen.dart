@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/pattern.dart';
-import '../widgets/rubiks_side_container.dart';
+import '../../models/pattern.dart';
+import '../../widgets/rubiks_side_container.dart';
 
 class PatternViewerScreen extends StatelessWidget {
   static const routeName = '/patternViewerScreen';

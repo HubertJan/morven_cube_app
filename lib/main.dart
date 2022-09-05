@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:morven_cube_app/provider/historyEntries.dart';
-import 'package:morven_cube_app/screens/single_pattern_side_edit_screen.dart';
+import 'package:morven_cube_app/screens/pattern_screens/single_pattern_side_edit_screen.dart';
 import 'package:provider/provider.dart';
 
-import './screens/solve_viewer_screen.dart';
 import './screens/tabs_screen.dart';
-import './screens/pattern_edit_screen.dart';
-import "./screens/custom_solve_screen.dart";
-import './screens/result_solve_screen.dart';
-import './screens/pattern_viewer_screen.dart';
-import './screens/auth_screen.dart';
-import './screens/verify_pattern_screen.dart';
+import './screens/pattern_screens/pattern_edit_screen.dart';
+import 'screens/solve/custom_solve_screen.dart';
+import 'screens/solve/result_solve_screen.dart';
+import './screens/pattern_screens/pattern_viewer_screen.dart';
+import 'screens/auth/auth_screen.dart';
+import 'screens/auth/verify_pattern_screen.dart';
 
 import './provider/status.dart';
 import './provider/historyEntries.dart';
@@ -32,16 +31,16 @@ class MyApp extends StatelessWidget {
           value: Auth(),
         ),
         ChangeNotifierProvider.value(
-          value: Status("http://10.0.2.2:9000"),
+          value: Status("http://192.168.0.42:9000"),
         ),
         ChangeNotifierProvider.value(
-          value: Process("http://10.0.2.2:9000"),
+          value: Process("http://192.168.0.42:9000"),
         ),
         ChangeNotifierProvider.value(
-          value: HistoryEntries("http://10.0.2.2:9000"),
+          value: HistoryEntries("http://192.168.0.42:9000"),
         ),
         ChangeNotifierProvider.value(
-          value: Sensor("http://10.0.2.2:9000"),
+          value: Sensor("http://192.168.0.42:9000"),
         ),
       ],
       child: Consumer<Auth>(
@@ -69,7 +68,6 @@ class MyApp extends StatelessWidget {
               );
             },
             CustomSolveScreen.routeName: (ctx) => CustomSolveScreen(),
-            SolveViewerScreen.routeName: (ctx) => SolveViewerScreen(),
             ResultSolveScreen.routeName: (ctx) => ResultSolveScreen(),
             PatternViewerScreen.routeName: (ctx) => PatternViewerScreen(),
             SinglePatternSideEditScreen.routeName: (ctx) =>

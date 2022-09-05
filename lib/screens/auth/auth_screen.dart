@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/verify_pattern_screen.dart';
-import '../provider/auth.dart';
+import 'verify_pattern_screen.dart';
+import '../../provider/auth.dart';
 
 class AuthScreen extends StatefulWidget {
   @override

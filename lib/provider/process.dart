@@ -11,7 +11,7 @@ class Process with ChangeNotifier {
   Process(this.url);
 
   List<String> instructions;
-  int currentInstructionId;
+  int programId;
   int time;
   Pattern pattern;
   Pattern endPattern;
@@ -19,11 +19,9 @@ class Process with ChangeNotifier {
 
   void _setDataFromJSON(Map<String, dynamic> json) {
     this.instructions = json['program'].split(" ");
-    this.time = json["time"];
+    this.time = json["runtime"];
     this.pattern = Pattern.fromString(json["startPattern"]);
-    this.endPattern = Pattern.fromString(json["endPattern"]);
-
-    this.currentInstructionId = json['currentInstructionId'] is int
+    this.programId = json['currentInstructionId'] is int
         ? json['currentInstructionId']
         : int.parse(json['currentInstructionId']);
   }
@@ -46,9 +44,11 @@ class Process with ChangeNotifier {
         return;
       }
       status = extractedData["status"];
-      if (extractedData["status"] != "IDLE") {
-        _setDataFromJSON(extractedData);
+      if (status == "RUN") {
+        this.status = "RUN";
+        return;
       }
+      _setDataFromJSON(extractedData);
     } catch (e) {
       return e;
     }

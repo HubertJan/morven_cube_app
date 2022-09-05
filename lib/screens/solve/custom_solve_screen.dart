@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:morven_cube_app/screens/solve/result_solve_screen.dart';
 
 import 'package:provider/provider.dart';
 
-import '../widgets/custom_tile_list.dart';
-import '../widgets//slider_list_tile.dart';
+import '../../widgets/custom_tile_list.dart';
+import '../../widgets/slider_list_tile.dart';
 
-import '../provider/status.dart';
-import './solve_viewer_screen.dart';
-import '../models/solveSetting.dart';
+import '../../provider/status.dart';
+import '../../models/solveSetting.dart';
 
 enum Algorithmus { mowen, kociemba }
 
@@ -68,7 +68,7 @@ class _CustomSolveScreenState extends State<CustomSolveScreen> {
         .postPattern("DRLUUBFBRBLURRLRUBLRDDFDLFUFUFFDBRDUBRUFLLFDDBFLUBLRBD",
             setting: setting)
         .then((_) => Navigator.of(context).popAndPushNamed(
-              SolveViewerScreen.routeName,
+              ResultSolveScreen.routeName,
             ));
   }
 

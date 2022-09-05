@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:morven_cube_app/screens/pattern_screens/single_pattern_side_edit_screen.dart';
 
-import '../models/pattern.dart';
-import '../widgets/rubiks_side_container.dart';
-import "../screens/single_pattern_side_edit_screen.dart";
+import '../../models/pattern.dart';
+import '../../widgets/rubiks_side_container.dart';
 
 class PatternEditScreen extends StatefulWidget {
   static const routeName = '/patternEditScreen';

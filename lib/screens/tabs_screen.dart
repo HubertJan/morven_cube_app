@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'solve_setup_screen.dart';
+import 'solve/solve_setup_screen.dart';
 import 'history_screen.dart';
 import 'status_screen.dart';
 
@@ -59,15 +59,15 @@ class NavigationBarWidget extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.vpn_key),
-          title: Text("Lösen"),
+          label: "Lösen",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.history),
-          title: Text("Verlauf"),
+          label: "Verlauf",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.info),
-          title: Text("Status"),
+          label: "Status",
         ),
       ],
     );
