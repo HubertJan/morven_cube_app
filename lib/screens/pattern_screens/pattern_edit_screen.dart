@@ -12,9 +12,9 @@ class PatternEditScreen extends StatefulWidget {
 }
 
 class _PatternEditScreenState extends State<PatternEditScreen> {
-  Pattern pattern;
+  CubePattern pattern;
 
-  Widget rubiksSideCard(Pattern pattern, Side side, String title) {
+  Widget rubiksSideCard(CubePattern pattern, Side side, String title) {
     return Container(
       padding: EdgeInsets.all(30),
       color: Colors.white,
@@ -30,7 +30,7 @@ class _PatternEditScreenState extends State<PatternEditScreen> {
     );
   }
 
-  Widget buttonRubiksSideCard(Pattern pattern, Side side, String title) {
+  Widget buttonRubiksSideCard(CubePattern pattern, Side side, String title) {
     return GestureDetector(
         onTap: () {
           Navigator.of(context)

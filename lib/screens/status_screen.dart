@@ -28,163 +28,89 @@ class _StatusScreenState extends State<StatusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: FutureBuilder(
-          future: Provider.of<Status>(context).fetchAndSetData(),
-          builder: (ctx, dataSnapshot) {
-            if (dataSnapshot.connectionState == ConnectionState.waiting) {
-              if (Provider.of<Status>(context).statusCode == "") {
-                return Center(child: CircularProgressIndicator());
-              }
-            }
-            return Consumer<Status>(
-              builder: (ctx, status, processWidget) {
-                return Container(
-                  child: ListView(
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Sensor",
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 14),
+            Container(
+              child: FutureBuilder(
+                future: Provider.of<Sensor>(context).fetchAndSetData(),
+                builder: (ctx, dataSnapshot) {
+                  if (dataSnapshot.connectionState == ConnectionState.waiting) {
+                    return SizedBox();
+                  } else {
+                    return Consumer<Sensor>(
+                      builder: (ctx, sensor, _) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(
-                            height: 100,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushNamed(PatternEditScreen.routeName,
-                                      arguments: status.pattern)
-                                  .then((pattern) {
-                                if (pattern != null) {
-                                  status.pattern = pattern;
-                                }
-                              });
-                            },
-                            child: RubiksSideContainer(
-                                pattern: status.pattern, side: Side.front),
-                          ),
-                          SizedBox(
-                            height: 75,
-                          ),
-                          StatusTile(status.statusCode),
-                          status.statusCode != "IDLE"
-                              ? Column(
-                                  children: [
-                                    SizedBox(height: 30),
-                                    processWidget,
-                                    SizedBox(height: 75),
-                                  ],
-                                )
-                              : SizedBox(),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                "Sensor",
-                                style: TextStyle(fontSize: 20),
+                              SizedBox(height: 20),
+                              VerticalVariableTile(
+                                title: "Temp1",
+                                variableText: sensor.temp1,
                               ),
-                              SizedBox(height: 14),
-                              Container(
-                                child: FutureBuilder(
-                                  future: Provider.of<Sensor>(context)
-                                      .fetchAndSetData(),
-                                  builder: (ctx, dataSnapshot) {
-                                    if (dataSnapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return SizedBox();
-                                    } else {
-                                      return Consumer<Sensor>(
-                                        builder: (ctx, sensor, _) => Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            SizedBox(height: 20),
-                                            VerticalVariableTile(
-                                              title: "Instruktionen",
-                                              variableText: sensor.temp1,
-                                            ),
-                                            SizedBox(height: 20),
-                                            VerticalVariableTile(
-                                              title: "Aktuelle Instruktion",
-                                              variableText: sensor.temp2,
-                                            ),
-                                            SizedBox(height: 20),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
+                              SizedBox(height: 20),
+                              VerticalVariableTile(
+                                title: "Temp2",
+                                variableText: sensor.temp2,
                               ),
-                              SizedBox(height: 50),
+                              SizedBox(height: 20),
+                              VerticalVariableTile(
+                                title: "Temp3",
+                                variableText: sensor.temp3,
+                              ),
+                              SizedBox(height: 20),
+                            ],
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SizedBox(height: 20),
+                              VerticalVariableTile(
+                                title: "Volt",
+                                variableText: sensor.volt1,
+                              ),
+                              SizedBox(height: 20),
+                              VerticalVariableTile(
+                                title: "Volt2",
+                                variableText: sensor.volt2,
+                              ),
+                              SizedBox(height: 20),
+                              VerticalVariableTile(
+                                title: "Volt3",
+                                variableText: sensor.volt3,
+                              ),
+                              SizedBox(height: 20),
                             ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                );
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Prozess",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(height: 14),
-                  Container(
-                    child: FutureBuilder(
-                      future: Provider.of<Process>(context).fetchAndSetData(),
-                      builder: (ctx, dataSnapshot) {
-                        if (dataSnapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else {
-                          return Consumer<Process>(
-                            builder: (ctx, process, _) => Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                SizedBox(height: 20),
-                                VerticalVariableTile(
-                                  title: "Instruktionen",
-                                  variableText:
-                                      '"${process.instructionsToString()}"',
-                                ),
-                                /*         SizedBox(height: 20),
-                                VerticalVariableTile(
-                                  title: "Aktuelle Instruktion",
-                                  variableText:
-                                      process.currentInstructionId.toString(),
-                                ), */
-                                SizedBox(height: 20),
-                                VerticalVariableTile(
-                                  title: "Laufzeit",
-                                  variableText:
-                                      '${(process.time / 1000).toString().replaceAll(".", ",")}s',
-                                ),
-                                SizedBox(height: 20),
-                              ],
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                  )
-                ],
+                    );
+                  }
+                },
               ),
-            );
-          },
-        ));
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+            ),
+            SizedBox(height: 50),
+          ],
+        ),
+      ),
+    );
   }
 }

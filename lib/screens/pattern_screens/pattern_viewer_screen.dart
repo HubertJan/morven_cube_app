@@ -6,7 +6,7 @@ import '../../widgets/rubiks_side_container.dart';
 class PatternViewerScreen extends StatelessWidget {
   static const routeName = '/patternViewerScreen';
 
-  Widget RubiksSideCard(Pattern pattern, Side side, String title) {
+  Widget RubiksSideCard(CubePattern pattern, Side side, String title) {
     return Container(
       padding: EdgeInsets.all(30),
       color: Colors.white,
@@ -24,7 +24,7 @@ class PatternViewerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Pattern pattern = ModalRoute.of(context).settings.arguments;
+    final CubePattern pattern = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(title: Text("Zauberwürfelmuster")),
       body: Column(

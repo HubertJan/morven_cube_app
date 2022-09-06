@@ -10,45 +10,28 @@ class Process with ChangeNotifier {
   final String url;
   Process(this.url);
 
-  List<String> instructions;
-  int programId;
-  int time;
-  Pattern pattern;
-  Pattern endPattern;
-  String status;
-
-  void _setDataFromJSON(Map<String, dynamic> json) {
-    this.instructions = json['program'].split(" ");
-    this.time = json["runtime"];
-    this.pattern = Pattern.fromString(json["startPattern"]);
-    this.programId = json['currentInstructionId'] is int
-        ? json['currentInstructionId']
-        : int.parse(json['currentInstructionId']);
-  }
-
-  String instructionsToString() {
-    String text = "";
-    this.instructions.forEach((String inst) {
-      text += '$inst ';
-    });
-    text = text.substring(0, text.length - 1);
-    return text;
-  }
+  bool isRunning = false;
 
   Future<void> fetchAndSetData() async {
     try {
-      final url = '${this.url}/process';
+      final url = '${this.url}/runningJob';
       final response = await http.get(url);
-      final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      if (extractedData == null) {
-        return;
+      isRunning = response.statusCode == 200;
+    } catch (e) {
+      return e;
+    }
+  }
+
+  Future<void> fetchUntilIsNotRunningAndSetData() async {
+    try {
+      while (true) {
+        final url = '${this.url}/runningJob';
+        final response = await http.get(url);
+        if (response.statusCode == 204) {
+          isRunning = false;
+          return;
+        }
       }
-      status = extractedData["status"];
-      if (status == "RUN") {
-        this.status = "RUN";
-        return;
-      }
-      _setDataFromJSON(extractedData);
     } catch (e) {
       return e;
     }

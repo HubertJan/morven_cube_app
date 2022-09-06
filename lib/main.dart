@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:morven_cube_app/provider/historyEntries.dart';
+import 'package:morven_cube_app/provider/process.dart';
 import 'package:morven_cube_app/screens/pattern_screens/single_pattern_side_edit_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,6 @@ import 'screens/auth/verify_pattern_screen.dart';
 
 import './provider/status.dart';
 import './provider/historyEntries.dart';
-import './provider/process.dart';
 import './provider/sensor.dart';
 import './provider/auth.dart';
 
@@ -30,18 +30,18 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider.value(
-          value: Status("http://192.168.0.42:9000"),
-        ),
-        ChangeNotifierProvider.value(
-          value: Process("http://192.168.0.42:9000"),
-        ),
-        ChangeNotifierProvider.value(
-          value: HistoryEntries("http://192.168.0.42:9000"),
-        ),
-        ChangeNotifierProvider.value(
-          value: Sensor("http://192.168.0.42:9000"),
-        ),
+        ChangeNotifierProxyProvider<Auth, Process>(
+            create: (ctx) => Process("http://192.168.0.42:9000"),
+            update: (ctx, auth, _) => Process("http://${auth.url}")),
+        ChangeNotifierProxyProvider<Auth, Status>(
+            create: (ctx) => Status("http://192.168.0.42:9000"),
+            update: (ctx, auth, _) => Status("http://${auth.url}")),
+        ChangeNotifierProxyProvider<HistoryEntries, HistoryEntries>(
+            create: (ctx) => HistoryEntries("http://192.168.0.42:9000"),
+            update: (ctx, auth, _) => HistoryEntries("http://${auth.url}")),
+        ChangeNotifierProxyProvider<Auth, Sensor>(
+            create: (ctx) => Sensor("http://192.168.0.42:9000"),
+            update: (ctx, auth, _) => Sensor("http://${auth.url}")),
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
@@ -54,6 +54,9 @@ class MyApp extends StatelessWidget {
           initialRoute: "/",
           routes: {
             '/': (ctx) {
+              if (auth.url == null) {
+                return AuthScreen();
+              }
               return FutureBuilder(
                 future: auth.isVerified(),
                 builder: (ctx, dataSnap) {
@@ -62,7 +65,7 @@ class MyApp extends StatelessWidget {
                   } else if (dataSnap.data == true) {
                     return TabsScreen();
                   } else {
-                    return AuthScreen();
+                    return VerifyPatternScreen();
                   }
                 },
               );

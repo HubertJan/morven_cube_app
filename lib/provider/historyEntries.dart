@@ -18,20 +18,21 @@ class HistoryEntries extends ChangeNotifier {
   }
 
   Future<void> fetchAndSetEntries() async {
-    final response = await http.get('${this.url}/records');
+    final response = await http.get('${this.url}/runthroughs');
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData == null) {
       return;
     }
-    List<dynamic> records = extractedData["records"];
+    List<dynamic> records = extractedData["data"];
+    _entries.clear();
     records.forEach((data) {
       _entries.add(
         HistoryEntry(
           id: data["id"],
-          time: data["time"].toInt(),
+          time: data["runtime"].toInt(),
           date: data["date"],
-          startPattern: Pattern.fromString(data["startPattern"]),
-          endPattern: Pattern.fromString(data["endPattern"]),
+          startPattern: CubePattern.fromString(data["startPattern"]),
+          endPattern: CubePattern.fromString(data["endPattern"]),
           instructions: data["instructions"],
         ),
       );

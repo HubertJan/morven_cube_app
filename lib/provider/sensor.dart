@@ -26,6 +26,10 @@ class Sensor extends ChangeNotifier {
     }
     this.temp1 = extractedData["temp"].toString();
     this.temp2 = extractedData["temp2"].toString();
+    this.temp3 = extractedData["temp2"].toString();
+    this.volt1 = extractedData["volt1"].toString();
+    this.volt2 = extractedData["volt2"].toString();
+    this.volt3 = extractedData["volt3"].toString();
   }
 
   Future<void> postPattern(String newPattern) async {

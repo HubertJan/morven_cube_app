@@ -14,7 +14,7 @@ class VerifyPatternScreen extends StatefulWidget {
 }
 
 class _VerifyPatternScreenState extends State<VerifyPatternScreen> {
-  Pattern pattern;
+  CubePattern pattern;
 
   @override
   Widget build(BuildContext context) {

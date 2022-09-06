@@ -6,8 +6,8 @@ class HistoryEntry {
   final int time;
   final String date;
 
-  final Pattern startPattern;
-  final Pattern endPattern;
+  final CubePattern startPattern;
+  final CubePattern endPattern;
   final String instructions;
   final String id;
 

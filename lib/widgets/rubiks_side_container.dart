@@ -4,7 +4,7 @@ import "package:flutter/material.dart";
 import '../models/pattern.dart';
 
 class RubiksSideContainer extends StatelessWidget {
-  final Pattern pattern;
+  final CubePattern pattern;
   final Side side;
   final squareToColor = {
     "F": Colors.green,

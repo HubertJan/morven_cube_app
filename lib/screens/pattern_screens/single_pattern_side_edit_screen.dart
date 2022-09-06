@@ -16,7 +16,7 @@ class SinglePatternSideEditScreen extends StatefulWidget {
 class _SinglePatternSideEditScreenState
     extends State<SinglePatternSideEditScreen> {
   String _selectedColor = "";
-  Pattern pattern = null;
+  CubePattern pattern = null;
   final squareToColor = {
     "F": Colors.green,
     "B": Colors.blue,
@@ -72,7 +72,7 @@ class _SinglePatternSideEditScreenState
     );
   }
 
-  Widget cubeContainer(Pattern pattern, Side side) {
+  Widget cubeContainer(CubePattern pattern, Side side) {
     List<Row> rows = [];
 
     int i = 0;
@@ -113,7 +113,7 @@ class _SinglePatternSideEditScreenState
   @override
   Widget build(BuildContext context) {
     if (pattern == null) {
-      pattern = Pattern.copy(ModalRoute.of(context).settings.arguments);
+      pattern = CubePattern.copy(ModalRoute.of(context).settings.arguments);
     }
 
     return Scaffold(

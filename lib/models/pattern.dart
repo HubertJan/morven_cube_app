@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Pattern {
+class CubePattern {
   final List<String> patternList;
   static const possibleLetter = ["U", "D", "L", "R", "F", "B"];
 
-  Pattern(this.patternList);
+  CubePattern(this.patternList);
 
-  Pattern.fromString(String patternString)
+  CubePattern.fromString(String patternString)
       : patternList = patternString.split("");
 
-  Pattern.copy(Pattern old) : patternList = old.patternList.toList();
+  CubePattern.copy(CubePattern old) : patternList = old.patternList.toList();
 
   List<String> getSide(Side side) {
     return patternList.sublist(side.index * 9, side.index * 9 + 9);

@@ -9,15 +9,19 @@ import '../models/pattern.dart';
 class Auth extends ChangeNotifier {
   String _url;
 
+  String get url {
+    return _url;
+  }
+
   Future<bool> connect(String url) async {
     try {
-      final response = await http.get('http://$url/sensor');
-      final responseData = json.decode(response.body);
-      if (responseData['temp'] == null) {
-        throw Exception();
+      final response = await http.get('http://$url/server');
+      bool wasSucessfull = response.statusCode == 200;
+      if (wasSucessfull) {
+        _url = url;
       }
-      _url = url;
-      return true;
+      notifyListeners();
+      return wasSucessfull;
     } catch (error) {
       return false;
     }
@@ -29,20 +33,20 @@ class Auth extends ChangeNotifier {
     }
     try {
       final response = await http.get('http://$_url/pattern');
-      return true;
+      return response.statusCode == 200;
     } catch (e) {
       return false;
     }
   }
 
-  Future<Pattern> getToBeVerifiedPattern() async {
+  Future<CubePattern> getToBeVerifiedPattern() async {
     if (_url == null) {
       throw Exception();
     }
 
-    final response = await http.get('http://$_url/possiblePattern');
+    final response = await http.get('http://$_url/scanPattern');
     final responseData = json.decode(response.body);
-    return Pattern.fromString(responseData["pattern"]);
+    return CubePattern.fromString(responseData["pattern"]);
   }
 
   Future<void> verifyPattern(String pattern) async {
@@ -50,6 +54,14 @@ class Auth extends ChangeNotifier {
       throw Exception();
     }
 
-    final resp = await http.patch('$_url/verifiedPattern/$pattern');
+    try {
+      final resp = await http.put('http://$_url/pattern/$pattern');
+      if (resp.statusCode == 200) {
+        return;
+      }
+      throw Exception("Unsucessfull request.");
+    } catch (e) {
+      print(e);
+    }
   }
 }
