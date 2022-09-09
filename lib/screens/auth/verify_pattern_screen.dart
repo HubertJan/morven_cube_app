@@ -15,6 +15,7 @@ class VerifyPatternScreen extends StatefulWidget {
 
 class _VerifyPatternScreenState extends State<VerifyPatternScreen> {
   CubePattern pattern;
+  bool _isInvalid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,7 @@ class _VerifyPatternScreenState extends State<VerifyPatternScreen> {
                                   .then((p) {
                                 if (p != null) {
                                   pattern = p;
+                                  _isInvalid = false;
                                   setState(() {});
                                 }
                               });
@@ -65,14 +67,40 @@ class _VerifyPatternScreenState extends State<VerifyPatternScreen> {
                               side: Side.front,
                             ),
                           ),
-                          FlatButton(
+                          if (_isInvalid)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                "Muster ist ungültig.",
+                                style: TextStyle(
+                                  color: Theme.of(context).errorColor,
+                                ),
+                              ),
+                            ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          ElevatedButton(
                             child: Text("Bestätigen"),
                             onPressed: () async {
-                              auth.verifyPattern(pattern.asString()).then((_) =>
-                                  Navigator.of(context)
-                                      .pushReplacementNamed("/"));
+                              try {
+                                await auth.verifyPattern(pattern.asString());
+                                Navigator.of(context).pushReplacementNamed("/");
+                              } catch (_) {
+                                _isInvalid = true;
+                                setState(() {});
+                              }
                             },
                           ),
+                          TextButton(
+                              onPressed: () async {
+                                try {
+                                  pattern = await auth.getToBeVerifiedPattern();
+                                  setState(() {});
+                                  _isInvalid = false;
+                                } catch (_) {}
+                              },
+                              child: Text("Nochmal scannen"))
                         ],
                       );
                     }

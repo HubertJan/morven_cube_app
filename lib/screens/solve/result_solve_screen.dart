@@ -81,7 +81,7 @@ class ResultSolveScreen extends StatelessWidget {
                               trailing: Container(
                                 padding: EdgeInsets.all(5),
                                 child: Text(
-                                  '${data.instructions.length.toString()}',
+                                  '${data.instructions.split(" ").length.toString()}',
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Theme.of(context).primaryColor),

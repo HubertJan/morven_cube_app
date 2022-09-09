@@ -6,4 +6,12 @@ class SolveSetting {
   int maxSp;
 
   SolveSetting();
+
+  Map toJson() => {
+        'acc50': acc50,
+        'acc100': acc100,
+        'cc50': cc50,
+        'cc100': cc100,
+        'maxSp': maxSp,
+      };
 }

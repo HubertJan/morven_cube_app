@@ -64,12 +64,11 @@ class _CustomSolveScreenState extends State<CustomSolveScreen> {
       return;
     }
     _form.currentState.save();
-    Provider.of<Status>(context, listen: false)
-        .postPattern("DRLUUBFBRBLURRLRUBLRDDFDLFUFUFFDBRDUBRUFLLFDDBFLUBLRBD",
-            setting: setting)
-        .then((_) => Navigator.of(context).popAndPushNamed(
-              ResultSolveScreen.routeName,
-            ));
+    final id = await Provider.of<Status>(context, listen: false).postPattern(
+        "DRLUUBFBRBLURRLRUBLRDDFDLFUFUFFDBRDUBRUFLLFDDBFLUBLRBD",
+        setting: setting);
+    Navigator.of(context)
+        .popAndPushNamed(ResultSolveScreen.routeName, arguments: id);
   }
 
   @override

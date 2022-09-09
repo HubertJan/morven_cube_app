@@ -30,13 +30,11 @@ class _PatternEditScreenState extends State<PatternEditScreen> {
     );
   }
 
-  Widget buttonRubiksSideCard(CubePattern pattern, Side side, String title) {
+  Widget buttonRubiksSideCard(Side side, String title) {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(SinglePatternSideEditScreen.routeName,
-                  arguments: pattern)
-              .then((result) {
+          Navigator.of(context).pushNamed(SinglePatternSideEditScreen.routeName,
+              arguments: [pattern, side]).then((result) {
             if (result == null) {
               return;
             }
@@ -58,7 +56,7 @@ class _PatternEditScreenState extends State<PatternEditScreen> {
         child: Row(
           children: [
             IconButton(
-                icon: Icon(Icons.close),
+                icon: Icon(Icons.done),
                 onPressed: () {
                   if (pattern.isValid()) {
                     Navigator.of(context).pop(pattern);
@@ -74,22 +72,22 @@ class _PatternEditScreenState extends State<PatternEditScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              buttonRubiksSideCard(pattern, Side.front, "Vorderseite"),
-              buttonRubiksSideCard(pattern, Side.back, "Rückseite"),
+              buttonRubiksSideCard(Side.front, "Vorderseite"),
+              buttonRubiksSideCard(Side.back, "Rückseite"),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              buttonRubiksSideCard(pattern, Side.left, "Linke Seite"),
-              buttonRubiksSideCard(pattern, Side.right, "Rechte Seite"),
+              buttonRubiksSideCard(Side.left, "Linke Seite"),
+              buttonRubiksSideCard(Side.right, "Rechte Seite"),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              buttonRubiksSideCard(pattern, Side.up, "Oberseite"),
-              buttonRubiksSideCard(pattern, Side.down, "Unterseite"),
+              buttonRubiksSideCard(Side.up, "Oberseite"),
+              buttonRubiksSideCard(Side.down, "Unterseite"),
             ],
           ),
         ],

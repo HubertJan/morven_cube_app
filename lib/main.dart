@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Status>(
             create: (ctx) => Status("http://192.168.0.42:9000"),
             update: (ctx, auth, _) => Status("http://${auth.url}")),
-        ChangeNotifierProxyProvider<HistoryEntries, HistoryEntries>(
+        ChangeNotifierProxyProvider<Auth, HistoryEntries>(
             create: (ctx) => HistoryEntries("http://192.168.0.42:9000"),
             update: (ctx, auth, _) => HistoryEntries("http://${auth.url}")),
         ChangeNotifierProxyProvider<Auth, Sensor>(

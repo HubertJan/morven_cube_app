@@ -17,6 +17,7 @@ class _SinglePatternSideEditScreenState
     extends State<SinglePatternSideEditScreen> {
   String _selectedColor = "";
   CubePattern pattern = null;
+  Side side = null;
   final squareToColor = {
     "F": Colors.green,
     "B": Colors.blue,
@@ -113,7 +114,9 @@ class _SinglePatternSideEditScreenState
   @override
   Widget build(BuildContext context) {
     if (pattern == null) {
-      pattern = CubePattern.copy(ModalRoute.of(context).settings.arguments);
+      final result = ModalRoute.of(context).settings.arguments as List;
+      pattern = CubePattern.copy(result[0]);
+      side = result[1];
     }
 
     return Scaffold(
@@ -122,7 +125,7 @@ class _SinglePatternSideEditScreenState
         children: [
           cubeContainer(
             pattern,
-            Side.front,
+            side,
           ),
           colorPanel(),
         ],
@@ -131,7 +134,7 @@ class _SinglePatternSideEditScreenState
         child: Row(
           children: [
             IconButton(
-                icon: Icon(Icons.close),
+                icon: Icon(Icons.done),
                 onPressed: () => Navigator.of(context).pop(pattern)),
             Spacer(),
           ],
@@ -142,7 +145,7 @@ class _SinglePatternSideEditScreenState
           "Zauberwürfelmuster",
         ),
         leading: IconButton(
-          icon: new Icon(Icons.arrow_back),
+          icon: new Icon(Icons.close),
           onPressed: () {
             pattern = null;
             Navigator.of(context).pop();

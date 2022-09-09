@@ -54,14 +54,10 @@ class Auth extends ChangeNotifier {
       throw Exception();
     }
 
-    try {
-      final resp = await http.put('http://$_url/pattern/$pattern');
-      if (resp.statusCode == 200) {
-        return;
-      }
-      throw Exception("Unsucessfull request.");
-    } catch (e) {
-      print(e);
+    final resp = await http.put('http://$_url/pattern/$pattern');
+    if (resp.statusCode == 200) {
+      return;
     }
+    throw Exception("Unsucessfull request.");
   }
 }
